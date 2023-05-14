@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import UserForm from './components/UserForm';
+import UserGrid from './components/UserGrid';
+import { Container } from 'react-bootstrap';
 
 function App() {
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refreshUserGrid = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <div style={{ flex: '1 1 33%', overflow: 'auto' }}>
+        <Container>
+          <UserForm refreshUserGrid={refreshUserGrid} />
+        </Container>
+      </div>
+      <div style={{ flex: '1 1 66%', overflow: 'auto' }}>
+        <Container>
+          <UserGrid refreshKey={refreshKey} />
+        </Container>
+      </div>
     </div>
   );
 }
